@@ -1,7 +1,9 @@
 import pygame
 pygame.init()
+import time
 
 screen=pygame.display.set_mode((640, 640))
+pygame.display.set_caption('labürint Alfa')
 
 hiir = pygame.image.load('hiir.png').convert()
 hiir = pygame.transform.scale(hiir, (50, 50))
@@ -13,6 +15,7 @@ delta = 0.1
 font = pygame.font.Font(None, size=30)
 moving_right = moving_left = moving_up = moving_down = False
 
+
 while running:
     screen.fill((255, 255, 255))
     screen.blit(hiir, (x, y))
@@ -20,25 +23,28 @@ while running:
     lõpp = pygame.Rect(570, 570, 100, 100)
     pygame.draw.rect(screen, (255, 0, 0), algus)
     pygame.draw.rect(screen, (255, 0, 0), lõpp)
-    takistus1 = pygame.Rect(200, 100, 100, 100)
-    takistus2 = pygame.Rect(75, 150, 30, 70)
-    takistus3 = pygame.Rect(300, 400, 30, 70)
-    takistus4 = pygame.Rect(250, 100, 100, 100)
-    takistus5 = pygame.Rect(400, 150, 150, 70)
-    takistus6 = pygame.Rect(450, 400, 100, 200)
-    takistus7 = pygame.Rect(100, 300, 200, 50)
-    pygame.draw.rect(screen, (0, 0, 0), takistus1)
-    pygame.draw.rect(screen, (0, 0, 0), takistus2)
-    pygame.draw.rect(screen, (0, 0, 0), takistus3)
-    pygame.draw.rect(screen, (0, 0, 0), takistus4)
-    pygame.draw.rect(screen, (0, 0, 0), takistus5)
-    pygame.draw.rect(screen, (0, 0, 0), takistus6)
-    pygame.draw.rect(screen, (0, 0, 0), takistus7)
+    takistused = [
+    pygame.Rect(200, 100, 100, 100),
+    pygame.Rect(75, 150, 30, 70),
+    pygame.Rect(300, 400, 30, 70),
+    pygame.Rect(250, 100, 100, 100),
+    pygame.Rect(400, 150, 150, 70),
+    pygame.Rect(450, 400, 100, 200),
+    pygame.Rect(100, 300, 200, 50)
+    ]
+    hiir_rect = pygame.Rect(x, y, 50, 50)
+
+
+    for t in takistused:
+        pygame.draw.rect(screen, (0, 0, 0), t)
+
 
 
 
     tekst = font.render('Algus', True, (0, 0, 0))
     tekst1 = font.render('Lõpp', True, (0, 0, 0))
+    tekst2 = font.render('Tubli! Said hakkama!', True, (0, 0, 0))
+    tekst3 = font.render('Jõua lõppu! Edu!', True, (0, 0, 0))
     screen.blit(tekst, (0, 0))
     screen.blit(tekst1, (570, 570))
     
@@ -76,6 +82,28 @@ while running:
         y += 50 * delta
     if moving_up:
         y -= 50 * delta
+    
+    for t in takistused:
+        if hiir_rect.colliderect(t):
+            x = 0
+            y = 0
+
+    if x > 570 and y > 570:
+        screen.blit(tekst2, (320, 320))
+    if x < 75 and y < 75:
+        screen.blit(tekst3, (90, 40))
+
+    if x < 2:
+        x += 20
+    elif x > 610:
+        x -= 20
+    
+    if y < 2:
+        y += 20
+    elif y > 610:
+        y -= 20
+
+
 
     pygame.display.flip()
     delta_aeg = kell.tick(60) / 1000
