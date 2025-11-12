@@ -14,6 +14,8 @@ kell = pygame.time.Clock()
 delta = 0.1
 font = pygame.font.Font(None, size=30)
 moving_right = moving_left = moving_up = moving_down = False
+# elud
+elud = 3
 
 
 while running:
@@ -24,21 +26,19 @@ while running:
     pygame.draw.rect(screen, (255, 0, 0), algus)
     pygame.draw.rect(screen, (255, 0, 0), lõpp)
     takistused = [
-    pygame.Rect(200, 100, 100, 100),
-    pygame.Rect(75, 150, 30, 70),
-    pygame.Rect(300, 400, 30, 70),
-    pygame.Rect(250, 100, 100, 100),
-    pygame.Rect(400, 150, 150, 70),
-    pygame.Rect(450, 400, 100, 200),
-    pygame.Rect(100, 300, 200, 50)
+        pygame.Rect(200, 100, 100, 100),
+        pygame.Rect(75, 150, 30, 70),
+        pygame.Rect(300, 400, 30, 70),
+        pygame.Rect(250, 100, 100, 100),
+        pygame.Rect(400, 150, 150, 70),
+        pygame.Rect(450, 400, 100, 200),
+        pygame.Rect(100, 300, 200, 50)
     ]
     hiir_rect = pygame.Rect(x, y, 50, 50)
 
 
     for t in takistused:
         pygame.draw.rect(screen, (0, 0, 0), t)
-
-
 
 
     tekst = font.render('Algus', True, (0, 0, 0))
@@ -48,11 +48,13 @@ while running:
     screen.blit(tekst, (0, 0))
     screen.blit(tekst1, (570, 570))
     
+    # elude ekraanile kuvamine 
+    elud_tekst = font.render(f'Elusid: {elud}', True, (0, 0, 255))
+    screen.blit(elud_tekst, (540, 10)) # Asukoht üleval paremal
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-           running = False
-
+            running = False
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
@@ -72,7 +74,7 @@ while running:
             if event.key == pygame.K_UP:
                 moving_up = False
             if event.key == pygame.K_DOWN:
-                moving_down = False    
+                moving_down = False
 
     if moving_right:
         x += 50 * delta
@@ -83,10 +85,21 @@ while running:
     if moving_up:
         y -= 50 * delta
     
+    # Kokkupõrke kontroll ja elu vähendamine
+    collision_detected = False
     for t in takistused:
         if hiir_rect.colliderect(t):
-            x = 0
-            y = 0
+            collision_detected = True
+            break
+
+    if collision_detected:
+        elud -= 1       
+        x = 0
+        y = 0
+        pygame.time.wait(200)
+
+        if elud <= 0:
+            running = False # Kui elud otsas, paneb mängu kinni
 
     if x > 570 and y > 570:
         screen.blit(tekst2, (320, 320))
@@ -103,9 +116,7 @@ while running:
     elif y > 610:
         y -= 20
 
-
-
     pygame.display.flip()
     delta_aeg = kell.tick(60) / 1000
     delta_aeg = max(0.001, min(0.1, delta_aeg))
-pygame.quit() 
+pygame.quit()
