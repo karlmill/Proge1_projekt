@@ -1,30 +1,33 @@
+#https://www.pygame.org/docs/
 import pygame
 pygame.init()
 import time
 
-screen=pygame.display.set_mode((640, 640))
-pygame.display.set_caption('labürint Alfa')
+screen=pygame.display.set_mode((640, 640)) #mängu ekraani suurus pikslites
+pygame.display.set_caption('labürint Alfa') #mängu ekraani nimi
 
-hiir = pygame.image.load('hiir.png').convert()
-hiir = pygame.transform.scale(hiir, (50, 50))
-hiir.set_colorkey((0, 0, 0))
+hiir = pygame.image.load('hiir.png').convert() #hiire pilt
+hiir = pygame.transform.scale(hiir, (50, 50)) #kuna hiire pilt on suur, teisendame väiksemaks
+hiir.set_colorkey((0, 0, 0)) #hiire taust valge
 running = True
-x = y = 10
+x = y = 10 #hiir algkordinaadid
 kell = pygame.time.Clock()
 delta = 0.1
-font = pygame.font.Font(None, size=30)
+font = pygame.font.Font(None, size=30) #font, millega kirjad on mänguekraanil
 moving_right = moving_left = moving_up = moving_down = False
 # elud
 elud = 3
 
 
 while running:
-    screen.fill((255, 255, 255))
-    screen.blit(hiir, (x, y))
-    algus = pygame.Rect(0, 0, 75, 75)
+    screen.fill((255, 255, 255)) #mängutaust valgeks
+    screen.blit(hiir, (x, y)) #hiir mänguekraanile
+    #alguse ja lõpu ristkülikud(asukoht, suurus), lisatud ekraanile
+    algus = pygame.Rect(0, 0, 75, 75) 
     lõpp = pygame.Rect(570, 570, 100, 100)
     pygame.draw.rect(screen, (255, 0, 0), algus)
     pygame.draw.rect(screen, (255, 0, 0), lõpp)
+    #takistused
     takistused = [
         pygame.Rect(200, 100, 100, 100),
         pygame.Rect(75, 150, 30, 70),
@@ -36,11 +39,11 @@ while running:
     ]
     hiir_rect = pygame.Rect(x, y, 50, 50)
 
-
+    #takistused ekraanile joonistatud
     for t in takistused:
         pygame.draw.rect(screen, (0, 0, 0), t)
 
-
+    #tekstid ja kirjutame ekraanile
     tekst = font.render('Algus', True, (0, 0, 0))
     tekst1 = font.render('Lõpp', True, (0, 0, 0))
     tekst2 = font.render('Tubli! Said hakkama!', True, (0, 0, 0))
@@ -51,11 +54,11 @@ while running:
     # elude ekraanile kuvamine 
     elud_tekst = font.render(f'Elusid: {elud}', True, (0, 0, 255))
     screen.blit(elud_tekst, (540, 10)) # Asukoht üleval paremal
-
+    #olukorrakontroll
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+        if event.type == pygame.QUIT: #kui ekraan pannakse ristist kinni, siis mäng lõpetab töö
             running = False
-
+        #kui mõni nooleklahv on all vajutatud, siis sõltuvalt kindlast nupust hakkab hiir liikuma
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
                 moving_right = True
@@ -65,7 +68,7 @@ while running:
                 moving_up = True
             if event.key == pygame.K_DOWN:
                 moving_down = True  
-
+        #kui nupp lahti lastud, siis liikumine on False ja liikumine lõpeb
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:
                 moving_right = False
@@ -75,7 +78,7 @@ while running:
                 moving_up = False
             if event.key == pygame.K_DOWN:
                 moving_down = False
-
+    #liikumise loogika
     if moving_right:
         x += 50 * delta
     if moving_left:
@@ -100,12 +103,12 @@ while running:
 
         if elud <= 0:
             running = False # Kui elud otsas, paneb mängu kinni
-
+    #alguse ja lõpu tekstide kuvamine
     if x > 570 and y > 570:
         screen.blit(tekst2, (320, 320))
     if x < 75 and y < 75:
         screen.blit(tekst3, (90, 40))
-
+    #loogika, et hiir ekraanilt välja ei läheks
     if x < 2:
         x += 20
     elif x > 610:
@@ -116,7 +119,7 @@ while running:
     elif y > 610:
         y -= 20
 
-    pygame.display.flip()
-    delta_aeg = kell.tick(60) / 1000
+    pygame.display.flip() #värskendab ala, mis on muutunud, mitte tervet ekraani.
+    delta_aeg = kell.tick(60) / 1000 #kahekaadri vaheline aeg millisekundites
     delta_aeg = max(0.001, min(0.1, delta_aeg))
 pygame.quit()
