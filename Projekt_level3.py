@@ -1,15 +1,4 @@
 import pygame
-pygame.init()
-import time
-
-screen=pygame.display.set_mode((640, 640)) #mängu ekraani suurus pikslites
-
-hiir = pygame.image.load('hiir.png').convert() #hiire pilt
-hiir = pygame.transform.scale(hiir, (50, 50)) #kuna hiire pilt on suur, teisendame väiksemaks
-hiir.set_colorkey((0, 0, 0)) #hiire taust valge
-kell = pygame.time.Clock()
-delta = 0.1
-font = pygame.font.Font(None, size=30) #font, millega kirjad on mänguekraanil
 
 takistused = [
         pygame.Rect(200, 100, 100, 100),
@@ -20,7 +9,7 @@ takistused = [
         pygame.Rect(450, 400, 100, 200),
         pygame.Rect(100, 300, 200, 50)
     ]
-def level_3(screen, x_alg, y_alg, elud_alg):
+def level_3(screen, x_alg, y_alg, elud_alg, hiir, font, kell, delta):
     x = 0
     y = 0
     elud = elud_alg

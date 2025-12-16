@@ -16,9 +16,11 @@ pygame.init()
 screen=pygame.display.set_mode((640, 640))
 pygame.display.set_caption('Proge projekt')
 
+hiire_suurus = 30
 hiir = pygame.image.load('hiir.png').convert()
-hiir = pygame.transform.scale(hiir, (50, 50))
+hiir = pygame.transform.scale(hiir, (hiire_suurus, hiire_suurus))
 hiir.set_colorkey((0, 0, 0))
+
 running = True
 hetke_x = 10 
 hetke_y = 10
@@ -50,7 +52,7 @@ while running:
     elif mängu_faas in LEVELID:
         print(mängu_faas)
         praeguselevelifunktsioon = LEVELID[mängu_faas]
-        järgmine_state, hetke_x, hetke_y, elud = praeguselevelifunktsioon(screen, hetke_x, hetke_y, elud)
+        järgmine_state, hetke_x, hetke_y, elud = praeguselevelifunktsioon(screen, hetke_x, hetke_y, elud, hiir, font, kell, delta)
         mängu_faas = järgmine_state
     
     else:
