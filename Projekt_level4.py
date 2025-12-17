@@ -48,6 +48,11 @@ def level_4(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, 
     
     while level_running:
         screen.fill((255, 255, 255)) #mängutaust valgeks
+        #alguse ja lõpu ristkülikud(asukoht, suurus), lisatud ekraanile
+        algus = pygame.Rect(0, 0, 75, 75) 
+        lõpp = pygame.Rect(570, 570, 100, 100)
+        pygame.draw.rect(screen, (255, 0, 0), algus)
+        pygame.draw.rect(screen, (255, 0, 0), lõpp)
         praegune_aeg = pygame.time.get_ticks()
 
         if moving_right or moving_left:
@@ -63,12 +68,6 @@ def level_4(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, 
         if suund == "vasak":
             tegelase_pilt = pygame.transform.flip(tegelase_pilt, True, False)
         screen.blit(tegelase_pilt, (x, y))
-
-        #alguse ja lõpu ristkülikud(asukoht, suurus), lisatud ekraanile
-        algus = pygame.Rect(0, 0, 75, 75) 
-        lõpp = pygame.Rect(570, 570, 100, 100)
-        pygame.draw.rect(screen, (255, 0, 0), algus)
-        pygame.draw.rect(screen, (255, 0, 0), lõpp)
     
         tegelase_rect = pygame.Rect(x, y, tegelase_suurus, tegelase_suurus)
 
