@@ -33,6 +33,10 @@ südame_suurus = 30
 süda = pygame.image.load("süda.png").convert_alpha()
 süda = pygame.transform.scale(süda, (südame_suurus, südame_suurus))
 
+# Seina pildi muutujad
+seina_pilt_suurus = 40
+seina_pilt = pygame.image.load("grass.png").convert_alpha()
+seina_pilt = pygame.transform.scale(seina_pilt, (20, 20))
 
 running = True
 hetke_x = 0 
@@ -65,7 +69,7 @@ while running:
     elif mängu_faas in LEVELID:
         print(mängu_faas)
         praeguselevelifunktsioon = LEVELID[mängu_faas]
-        järgmine_state, hetke_x, hetke_y, elud = praeguselevelifunktsioon(screen, hetke_x, hetke_y, elud, tegelase_pildid, font, kell, delta, tegelase_kiirus, tegelase_suurus, süda, südame_suurus)
+        järgmine_state, hetke_x, hetke_y, elud = praeguselevelifunktsioon(screen, hetke_x, hetke_y, elud, tegelase_pildid, font, kell, delta, tegelase_kiirus, tegelase_suurus, süda, südame_suurus, seina_pilt)
         mängu_faas = järgmine_state
     
     else:

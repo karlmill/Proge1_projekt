@@ -31,7 +31,7 @@ for i, rida in enumerate(labürint):
             takistused.append(pygame.Rect(x_pos, y_pos, 20, 20))
 
 
-def level_3(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, tegelase_kiirus, tegelase_suurus, süda, südame_suurus):
+def level_3(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, tegelase_kiirus, tegelase_suurus, süda, südame_suurus, seina_pilt):
     x = 0
     y = 0
 
@@ -46,7 +46,7 @@ def level_3(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, 
     moving_right = moving_left = moving_up = moving_down = False
     
     while level_running:
-        screen.fill((255, 255, 255)) #mängutaust valgeks
+        screen.fill((200, 255, 200)) #mängutaust hele roheline
         #alguse ja lõpu ristkülikud(asukoht, suurus), lisatud ekraanile
         algus = pygame.Rect(0, 0, 75, 75) 
         lõpp = pygame.Rect(570, 570, 100, 100)
@@ -73,7 +73,7 @@ def level_3(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, 
 
         #takistused ekraanile joonistatud
         for t in takistused:
-            pygame.draw.rect(screen, (0, 0, 0), t)
+            screen.blit(seina_pilt, (t.x, t.y))
 
         #tekstid ja kirjutame ekraanile
         tekst = font.render('Algus', True, (0, 0, 0))
