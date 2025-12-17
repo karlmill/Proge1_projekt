@@ -31,7 +31,7 @@ for i, rida in enumerate(labürint):
             takistused.append(pygame.Rect(x_pos, y_pos, 20, 20))
 
 
-def level_1(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, tegelase_kiirus, tegelase_suurus):
+def level_1(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, tegelase_kiirus, tegelase_suurus, süda, südame_suurus):
 
     x = x_alg
     y = y_alg
@@ -85,8 +85,9 @@ def level_1(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, 
         screen.blit(tekst1, (570, 570))
         
         # elude ekraanile kuvamine 
-        elud_tekst = font.render(f'Elusid: {elud}', True, (0, 0, 255))
-        screen.blit(elud_tekst, (540, 10)) # Asukoht üleval paremal
+        for i in range(elud):
+            screen.blit(süda, (580 - i * (südame_suurus + 5), 10))
+
         #olukorrakontroll
         for event in pygame.event.get():
             if event.type == pygame.QUIT: #kui ekraan pannakse ristist kinni, siis mäng lõpetab töö

@@ -28,6 +28,11 @@ for i in range(1, 11): #pildid 1-10
     pilt.set_colorkey((0, 0, 0))
     tegelase_pildid.append(pilt)
 
+# Südame pildi muutujad
+südame_suurus = 30
+süda = pygame.image.load("süda.png").convert_alpha()
+süda = pygame.transform.scale(süda, (südame_suurus, südame_suurus))
+
 
 running = True
 hetke_x = 0 
@@ -60,7 +65,7 @@ while running:
     elif mängu_faas in LEVELID:
         print(mängu_faas)
         praeguselevelifunktsioon = LEVELID[mängu_faas]
-        järgmine_state, hetke_x, hetke_y, elud = praeguselevelifunktsioon(screen, hetke_x, hetke_y, elud, tegelase_pildid, font, kell, delta, tegelase_kiirus, tegelase_suurus)
+        järgmine_state, hetke_x, hetke_y, elud = praeguselevelifunktsioon(screen, hetke_x, hetke_y, elud, tegelase_pildid, font, kell, delta, tegelase_kiirus, tegelase_suurus, süda, südame_suurus)
         mängu_faas = järgmine_state
     
     else:
