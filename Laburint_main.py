@@ -22,8 +22,8 @@ hiir = pygame.transform.scale(hiir, (hiire_suurus, hiire_suurus))
 hiir.set_colorkey((0, 0, 0))
 
 running = True
-hetke_x = 10 
-hetke_y = 10
+hetke_x = 0 
+hetke_y = 0
 kell = pygame.time.Clock()
 delta = 0.1
 font = pygame.font.Font(None, size=30)

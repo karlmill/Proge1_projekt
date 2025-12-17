@@ -1,18 +1,42 @@
 import pygame
 
-takistused = [
-        pygame.Rect(200, 100, 100, 100),
-        pygame.Rect(75, 150, 30, 70),
-        pygame.Rect(300, 400, 30, 70),
-        pygame.Rect(250, 100, 100, 100),
-        pygame.Rect(400, 150, 150, 70),
-        pygame.Rect(450, 400, 100, 200),
-        pygame.Rect(100, 300, 200, 50)
-    ]
+labürint = [
+    [0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1],
+    [0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1],
+    [1,1,0,1,0,1,0,1,0,1,0,1,0,1,1,1],
+    [1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,1],
+    [1,0,1,1,1,1,1,1,0,1,1,1,1,1,0,1],
+    [1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,1],
+    [1,0,1,0,1,1,0,1,1,1,0,1,1,1,1,1],
+    [1,0,1,0,1,0,0,0,0,1,0,0,0,1,0,1],
+    [1,0,1,1,1,0,1,1,0,1,1,1,0,1,0,1],
+    [1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,1],
+    [1,1,1,0,1,1,1,0,1,1,1,1,1,1,0,1],
+    [1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+    [1,0,1,1,1,0,1,1,1,1,1,0,1,1,1,1],
+    [1,0,1,0,0,0,0,0,1,0,0,0,1,0,0,1],
+    [1,0,1,1,1,1,1,1,1,0,1,1,1,0,0,0],
+    [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0]
+]
+
+ühiku_suurus = 40
+
+takistused = []
+
+for i, rida in enumerate(labürint):
+    for j, ühik in enumerate(rida):
+        if ühik == 1:
+            x_pos = j * ühiku_suurus
+            y_pos = i * ühiku_suurus
+            takistused.append(pygame.Rect(x_pos, y_pos, 20, 20))
+
+
 def level_1(screen, x_alg, y_alg, elud_alg, hiir, font, kell, delta):
 
     x = x_alg
     y = y_alg
+    hiire_suurus = 30
+    kiirus = 35
     elud = elud_alg
     level_running = True
     moving_right = moving_left = moving_up = moving_down = False
@@ -25,7 +49,7 @@ def level_1(screen, x_alg, y_alg, elud_alg, hiir, font, kell, delta):
         pygame.draw.rect(screen, (255, 0, 0), algus)
         pygame.draw.rect(screen, (255, 0, 0), lõpp)
     
-        hiir_rect = pygame.Rect(x, y, 50, 50)
+        hiir_rect = pygame.Rect(x, y, hiire_suurus, hiire_suurus)
 
         #takistused ekraanile joonistatud
         for t in takistused:
@@ -69,13 +93,13 @@ def level_1(screen, x_alg, y_alg, elud_alg, hiir, font, kell, delta):
                     moving_down = False
         #liikumise loogika
         if moving_right:
-            x += 50 * delta
+            x += kiirus * delta
         if moving_left:
-            x -= 50 * delta
+            x -= kiirus * delta
         if moving_down:
-            y += 50 * delta
+            y += kiirus * delta
         if moving_up:
-            y -= 50 * delta
+            y -= kiirus * delta
         
         # Kokkupõrke kontroll ja elu vähendamine
         collision_detected = False
@@ -113,7 +137,3 @@ def level_1(screen, x_alg, y_alg, elud_alg, hiir, font, kell, delta):
         pygame.display.flip() #värskendab ala, mis on muutunud, mitte tervet ekraani.
         delta_aeg = kell.tick(60) / 1000 #kahekaadri vaheline aeg millisekundites
         delta_aeg = max(0.001, min(0.1, delta_aeg))
-
-
-
-    
