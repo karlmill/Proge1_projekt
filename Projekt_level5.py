@@ -32,25 +32,45 @@ for i, rida in enumerate(labürint):
             takistused.append(pygame.Rect(x_pos, y_pos, 20, 20))
 
 
-def level_5(screen, x_alg, y_alg, elud_alg, hiir, font, kell, delta):
+def level_5(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, tegelase_kiirus, tegelase_suurus):
     x = 0
     y = 0
-    kiirus = 35
-    hiire_suurus = 30
+    
+    #tegelase animatsiooni muutujad
+    animatsiooni_indeks = 0
+    animatsiooni_kiirus = 10
+    viimane_aeg = 0
+    suund = "parem"
+
     elud = elud_alg
     level_running = True
     moving_right = moving_left = moving_up = moving_down = False
     
     while level_running:
         screen.fill((255, 255, 255)) #mängutaust valgeks
-        screen.blit(hiir, (x, y)) #hiir mänguekraanile
+        praegune_aeg = pygame.time.get_ticks()
+
+        if moving_right or moving_left:
+            if praegune_aeg - viimane_aeg > 1000 // animatsiooni_kiirus:
+                animatsiooni_indeks = (animatsiooni_indeks + 1) % len(tegelase_pildid)
+                viimane_aeg = praegune_aeg
+        else:
+            animatsiooni_indeks = 0  # seisab
+
+        tegelase_pilt = tegelase_pildid[animatsiooni_indeks]
+
+        # vasakule liikumisel peegeldame pildi
+        if suund == "vasak":
+            tegelase_pilt = pygame.transform.flip(tegelase_pilt, True, False)
+        screen.blit(tegelase_pilt, (x, y))
+
         #alguse ja lõpu ristkülikud(asukoht, suurus), lisatud ekraanile
         algus = pygame.Rect(0, 0, 75, 75) 
         lõpp = pygame.Rect(570, 570, 100, 100)
         pygame.draw.rect(screen, (255, 0, 0), algus)
         pygame.draw.rect(screen, (255, 0, 0), lõpp)
     
-        hiir_rect = pygame.Rect(x, y, hiire_suurus, hiire_suurus)
+        tegelase_rect = pygame.Rect(x, y, tegelase_suurus, tegelase_suurus)
 
         #takistused ekraanile joonistatud
         for t in takistused:
@@ -72,8 +92,18 @@ def level_5(screen, x_alg, y_alg, elud_alg, hiir, font, kell, delta):
             if event.type == pygame.QUIT: #kui ekraan pannakse ristist kinni, siis mäng lõpetab töö
                 level_running = False
                 return "QUIT", x, y, elud
-            #kui mõni nooleklahv on all vajutatud, siis sõltuvalt kindlast nupust hakkab hiir liikuma
+            #kui mõni nooleklahv on all vajutatud, siis sõltuvalt kindlast nupust hakkab tegelane liikuma
             if event.type == pygame.KEYDOWN:
+
+                # tegelase suuna määramine
+                if event.key == pygame.K_RIGHT:
+                    moving_right = True
+                    suund = "parem"
+
+                if event.key == pygame.K_LEFT:
+                    moving_left = True
+                    suund = "vasak"
+
                 if event.key == pygame.K_RIGHT:
                     moving_right = True
                 if event.key == pygame.K_LEFT:
@@ -94,18 +124,18 @@ def level_5(screen, x_alg, y_alg, elud_alg, hiir, font, kell, delta):
                     moving_down = False
         #liikumise loogika
         if moving_right:
-            x += kiirus * delta
+            x += tegelase_kiirus * delta
         if moving_left:
-            x -= kiirus * delta
+            x -= tegelase_kiirus * delta
         if moving_down:
-            y += kiirus * delta
+            y += tegelase_kiirus * delta
         if moving_up:
-            y -= kiirus * delta
+            y -= tegelase_kiirus * delta
         
         # Kokkupõrke kontroll ja elu vähendamine
         collision_detected = False
         for t in takistused:
-            if hiir_rect.colliderect(t):
+            if tegelase_rect.colliderect(t):
                 collision_detected = True
                 break
 
@@ -124,7 +154,7 @@ def level_5(screen, x_alg, y_alg, elud_alg, hiir, font, kell, delta):
             return "QUIT",  x, y, elud
         if x < 75 and y < 75:
             screen.blit(tekst3, (90, 40))
-        #loogika, et hiir ekraanilt välja ei läheks
+        #loogika, et tegelane ekraanilt välja ei läheks
         if x < 2:
             x += 20
         elif x > 610:

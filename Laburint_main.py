@@ -16,10 +16,18 @@ pygame.init()
 screen=pygame.display.set_mode((640, 640))
 pygame.display.set_caption('Proge projekt')
 
-hiire_suurus = 30
-hiir = pygame.image.load('hiir.png').convert()
-hiir = pygame.transform.scale(hiir, (hiire_suurus, hiire_suurus))
-hiir.set_colorkey((0, 0, 0))
+tegelase_suurus = 40
+tegelase_kiirus = 35
+tegelase_pildid = []
+
+# Laeme tegelase pildid ja muudame nende suurust
+# Tegelase pildid saadud lingilt https://www.gameart2d.com/cat-and-dog-free-sprites.html
+for i in range(1, 11): #pildid 1-10
+    pilt = pygame.image.load(f'mängu_tegelane/Walk ({i}).png').convert()
+    pilt = pygame.transform.scale(pilt, (tegelase_suurus, tegelase_suurus))
+    pilt.set_colorkey((0, 0, 0))
+    tegelase_pildid.append(pilt)
+
 
 running = True
 hetke_x = 0 
@@ -52,7 +60,7 @@ while running:
     elif mängu_faas in LEVELID:
         print(mängu_faas)
         praeguselevelifunktsioon = LEVELID[mängu_faas]
-        järgmine_state, hetke_x, hetke_y, elud = praeguselevelifunktsioon(screen, hetke_x, hetke_y, elud, hiir, font, kell, delta)
+        järgmine_state, hetke_x, hetke_y, elud = praeguselevelifunktsioon(screen, hetke_x, hetke_y, elud, tegelase_pildid, font, kell, delta, tegelase_kiirus, tegelase_suurus)
         mängu_faas = järgmine_state
     
     else:
