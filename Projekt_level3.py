@@ -151,10 +151,17 @@ def level_3(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, 
                 return "QUIT", x, y, elud
         #alguse ja lõpu tekstide kuvamine
         if x > 570 and y > 570:
-            screen.blit(tekst2, (320, 320))
-            return "LEVEL_4",  x, y, elud
-        if x < 75 and y < 75:
-            screen.blit(tekst3, (90, 40))
+            lõpptaust = pygame.Rect(330, 590, 240, 50)
+            pygame.draw.rect(screen, (0, 255, 0), lõpptaust)
+            screen.blit(tekst2, (345, 605))
+            if x > 590 and y > 590:
+                return "LEVEL_4",  x, y, elud
+        
+        
+        if x < 60 and y < 60:
+            taust = pygame.Rect(80, 35, 300, 50)
+            pygame.draw.rect(screen, (0, 255, 0), taust)
+            screen.blit(tekst3, (100, 50))
         #loogika, et tegelane ekraanilt välja ei läheks
         if x < 2:
             x += 20
