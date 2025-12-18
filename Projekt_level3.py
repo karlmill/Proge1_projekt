@@ -79,7 +79,8 @@ def level_3(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, 
         tekst = font.render('Algus', True, (0, 0, 0))
         tekst1 = font.render('Lõpp', True, (0, 0, 0))
         tekst2 = font.render('Tubli! Said hakkama!', True, (0, 0, 0))
-        tekst3 = font.render('Jõua 3. leveli lõppu! Edu!', True, (0, 0, 0))
+        tekst3 = font.render('Nüüd on ta vihane >:[', True, (0, 0, 0))
+        tekst4 = font.render('Parem ja vasak vahetasid pooled!', True, (0, 0, 0))
         screen.blit(tekst, (0, 0))
         screen.blit(tekst1, (570, 570))
         
@@ -96,19 +97,15 @@ def level_3(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, 
             if event.type == pygame.KEYDOWN:
 
                 # tegelase suuna määramine
+                # muuda vasaku klahvi korral suund paremale ja parema klahvi korral vasakule
                 if event.key == pygame.K_RIGHT:
-                    moving_right = True
-                    suund = "parem"
-
-                if event.key == pygame.K_LEFT:
                     moving_left = True
                     suund = "vasak"
 
-
-                if event.key == pygame.K_RIGHT:
-                    moving_right = True
                 if event.key == pygame.K_LEFT:
-                    moving_left = True
+                    moving_right = True
+                    suund = "parem"
+
                 if event.key == pygame.K_UP:
                     moving_up = True
                 if event.key == pygame.K_DOWN:
@@ -116,9 +113,9 @@ def level_3(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, 
             #kui nupp lahti lastud, siis liikumine on False ja liikumine lõpeb
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_RIGHT:
-                    moving_right = False
-                if event.key == pygame.K_LEFT:
                     moving_left = False
+                if event.key == pygame.K_LEFT:
+                    moving_right = False
                 if event.key == pygame.K_UP:
                     moving_up = False
                 if event.key == pygame.K_DOWN:
@@ -160,8 +157,12 @@ def level_3(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, 
         
         if x < 60 and y < 60:
             taust = pygame.Rect(80, 35, 300, 50)
+            # taust lisa teksti jaoks
+            taust2 = pygame.Rect(80, 65, 350, 50)
             pygame.draw.rect(screen, (0, 255, 0), taust)
+            pygame.draw.rect(screen, (0, 255, 0), taust2)
             screen.blit(tekst3, (100, 50))
+            screen.blit(tekst4, (100, 80))
         #loogika, et tegelane ekraanilt välja ei läheks
         if x < 2:
             x += 20

@@ -107,11 +107,6 @@ def level_1(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, 
                     moving_left = True
                     suund = "vasak"
 
-
-                if event.key == pygame.K_RIGHT:
-                    moving_right = True
-                if event.key == pygame.K_LEFT:
-                    moving_left = True
                 if event.key == pygame.K_UP:
                     moving_up = True
                 if event.key == pygame.K_DOWN:

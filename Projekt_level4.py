@@ -79,7 +79,7 @@ def level_4(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, 
         tekst = font.render('Algus', True, (0, 0, 0))
         tekst1 = font.render('Lõpp', True, (0, 0, 0))
         tekst2 = font.render('Tubli! Said hakkama!', True, (0, 0, 0))
-        tekst3 = font.render('Jõua 4. leveli lõppu! Edu!', True, (0, 0, 0))
+        tekst3 = font.render('Tegelane on õnnelik ja KIIRE', True, (0, 0, 0))
         screen.blit(tekst, (0, 0))
         screen.blit(tekst1, (570, 570))
         
@@ -104,11 +104,6 @@ def level_4(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, 
                     moving_left = True
                     suund = "vasak"
 
-
-                if event.key == pygame.K_RIGHT:
-                    moving_right = True
-                if event.key == pygame.K_LEFT:
-                    moving_left = True
                 if event.key == pygame.K_UP:
                     moving_up = True
                 if event.key == pygame.K_DOWN:
@@ -125,13 +120,13 @@ def level_4(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, 
                     moving_down = False
         #liikumise loogika
         if moving_right:
-            x += tegelase_kiirus * delta
+            x += (tegelase_kiirus + 20) * delta
         if moving_left:
-            x -= tegelase_kiirus * delta
+            x -= (tegelase_kiirus + 20) * delta
         if moving_down:
-            y += tegelase_kiirus * delta
+            y += (tegelase_kiirus + 20) * delta
         if moving_up:
-            y -= tegelase_kiirus * delta
+            y -= (tegelase_kiirus + 20) * delta
         
         # Kokkupõrke kontroll ja elu vähendamine
         collision_detected = False
@@ -157,7 +152,7 @@ def level_4(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, 
             if x > 590 and y > 590:
                 return "LEVEL_5",  x, y, elud
         if x < 60 and y < 60:
-            taust = pygame.Rect(80, 35, 300, 50)
+            taust = pygame.Rect(80, 35, 320, 50)
             pygame.draw.rect(screen, (0, 255, 0), taust)
             screen.blit(tekst3, (100, 50))
         #loogika, et tegelane ekraanilt välja ei läheks

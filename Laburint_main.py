@@ -46,7 +46,7 @@ delta = 0.1
 font = pygame.font.Font(None, size=30)
 moving_right = moving_left = moving_up = moving_down = False
 vaade_horis = vaade_vert = False
-elud = 3
+elud = 5
 mängu_faas = "algus"
 
 LEVELID = {

@@ -79,7 +79,7 @@ def level_5(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, 
         tekst = font.render('Algus', True, (0, 0, 0))
         tekst1 = font.render('Lõpp', True, (0, 0, 0))
         tekst2 = font.render('Tubli! Said hakkama!', True, (0, 0, 0))
-        tekst3 = font.render('See viimane level! Edu!', True, (0, 0, 0))
+        tekst3 = font.render('Ärevus! Kõik nooled sassis!', True, (0, 0, 0))
         screen.blit(tekst, (0, 0))
         screen.blit(tekst1, (570, 570))
         
@@ -96,31 +96,27 @@ def level_5(screen, x_alg, y_alg, elud_alg, tegelase_pildid, font, kell, delta, 
 
                 # tegelase suuna määramine
                 if event.key == pygame.K_RIGHT:
-                    moving_right = True
-                    suund = "parem"
-
-                if event.key == pygame.K_LEFT:
                     moving_left = True
                     suund = "vasak"
 
-                if event.key == pygame.K_RIGHT:
-                    moving_right = True
                 if event.key == pygame.K_LEFT:
-                    moving_left = True
+                    moving_right = True
+                    suund = "parem"
+
                 if event.key == pygame.K_UP:
-                    moving_up = True
+                    moving_down = True
                 if event.key == pygame.K_DOWN:
-                    moving_down = True  
+                    moving_up = True  
             #kui nupp lahti lastud, siis liikumine on False ja liikumine lõpeb
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_RIGHT:
-                    moving_right = False
-                if event.key == pygame.K_LEFT:
                     moving_left = False
+                if event.key == pygame.K_LEFT:
+                    moving_right = False
                 if event.key == pygame.K_UP:
-                    moving_up = False
-                if event.key == pygame.K_DOWN:
                     moving_down = False
+                if event.key == pygame.K_DOWN:
+                    moving_up = False
         #liikumise loogika
         if moving_right:
             x += tegelase_kiirus * delta
