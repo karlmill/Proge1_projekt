@@ -2,6 +2,7 @@
 #Projekt Bive, Lilii-Ann Older, Karl Miller
 #Mängu mängimiseks (programmi käivitamiseks) on vajalik alla laadida pygame.
 #Allalaadimseks vaja terminali sisestada käsk "pip3 install pygame"
+#mängu mängimiseks käivitada 'Laburint_main.py' 
 import pygame
 import time
 import sys
